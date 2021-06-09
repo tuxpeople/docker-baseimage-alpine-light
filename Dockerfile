@@ -20,10 +20,10 @@ RUN \
 	xz
 
 # fetch builder script from gliderlabs
-# hadolint ignore=SC2046
+# hadolint ignore=SC2046,SC2034
 RUN \
- ARCH=`uname -m` && \
- REL=`cat /etc/alpine-release` && \
+ ARCH=$(uname -m) && \
+ REL=$(cat /etc/alpine-release) && \
  curl -o \
  /mkimage-alpine.bash -L \
 	https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/mkimage-alpine.bash && \
