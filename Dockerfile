@@ -1,5 +1,4 @@
 FROM alpine:3.10 as rootfs-stage
-ARG TARGETPLATFORM
 
 # environment
 ENV MIRROR=http://dl-cdn.alpinelinux.org/alpine
@@ -20,14 +19,7 @@ RUN \
 	xz
 
 # fetch builder script from gliderlabs
-# hadolint ignore=SC2046,SC2034,SC2002,DL4006,SC2155
 RUN \
- case ${TARGETPLATFORM} in \
-  "linux/amd64")  export ARCH=x86_64  ;; \
-  "linux/arm64")  export ARCH=aarch64  ;; \
-  "linux/arm/v7") export ARCH=armv7  ;; \
- esac; \
- export REL=$(cat /etc/alpine-release | cut -d'.' -f1-2) && \
  curl -o \
  /mkimage-alpine.bash -L \
 	https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/mkimage-alpine.bash && \
