@@ -12,6 +12,7 @@ libc-utils,\
 xz
 
 # install packages
+# hadolint ignore=DL3018
 RUN \
  apk add --no-cache \
 	bash \
