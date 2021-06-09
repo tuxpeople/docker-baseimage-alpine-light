@@ -22,7 +22,11 @@ RUN \
 # fetch builder script from gliderlabs
 # hadolint ignore=SC2046,SC2034
 RUN \
- ARCH=$(uname -m) && \
+ case ${TARGETPLATFORM} in \
+  "linux/amd64")  ARCH=x86_64  ;; \
+  "linux/arm64")  ARCH=aarch64  ;; \
+  "linux/arm/v7") ARCH=armv7  ;; \
+ esac; \
  REL=$(cat /etc/alpine-release) && \
  curl -o \
  /mkimage-alpine.bash -L \
