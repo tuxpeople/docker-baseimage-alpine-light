@@ -20,6 +20,7 @@ RUN \
 	xz
 
 # fetch builder script from gliderlabs
+# hadolint ignore=SC2046
 RUN \
  curl -o \
  /mkimage-alpine.bash -L \
