@@ -22,12 +22,14 @@ RUN \
 # fetch builder script from gliderlabs
 # hadolint ignore=SC2046
 RUN \
+ ARCH=`uname -m` && \
+ REL=`cat /etc/alpine-release` && \
  curl -o \
  /mkimage-alpine.bash -L \
 	https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/mkimage-alpine.bash && \
  chmod +x \
 	/mkimage-alpine.bash && \
- ./mkimage-alpine.bash -a $(uname -m) -r $(cat /etc/alpine-release) && \
+ ./mkimage-alpine.bash && \
  mkdir /root-out && \
  tar xf \
 	/rootfs.tar.xz -C \
