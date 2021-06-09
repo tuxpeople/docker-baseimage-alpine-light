@@ -1,8 +1,8 @@
 FROM alpine:3.10 as rootfs-stage
+ARG TARGETPLATFORM
 
 # environment
 ENV REL=v3.12
-ENV ARCH=x86_64
 ENV MIRROR=http://dl-cdn.alpinelinux.org/alpine
 ENV PACKAGES=alpine-baselayout,\
 alpine-keys,\
@@ -22,6 +22,11 @@ RUN \
 
 # fetch builder script from gliderlabs
 RUN \
+ case ${TARGETPLATFORM} in \
+  "linux/amd64")  ARCH=x86_64  ;; \
+  "linux/arm64")  ARCH=aarch64  ;; \
+  "linux/arm/v7") ARCH=armv7  ;; \
+ esac; \
  curl -o \
  /mkimage-alpine.bash -L \
 	https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/mkimage-alpine.bash && \
