@@ -21,6 +21,7 @@ RUN \
 	xz
 
 # fetch builder script from gliderlabs
+# hadolint ignore=SC2034
 RUN \
  case ${TARGETPLATFORM} in \
   "linux/amd64")  ARCH=x86_64  ;; \
