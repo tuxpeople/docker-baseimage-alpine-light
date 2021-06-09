@@ -27,7 +27,7 @@ RUN \
   "linux/arm64")  ARCH=aarch64  ;; \
   "linux/arm/v7") ARCH=armv7  ;; \
  esac; \
- REL=$(cat /etc/alpine-release) && \
+ REL=$(cat /etc/alpine-release | cut -d'.' -f1-2) && \
  curl -o \
  /mkimage-alpine.bash -L \
 	https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/mkimage-alpine.bash && \
