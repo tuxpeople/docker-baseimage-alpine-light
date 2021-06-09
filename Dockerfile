@@ -44,6 +44,7 @@ ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
 HOME="/root" \
 TERM="xterm"
 
+# hadolint ignore=DL3018
 RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
