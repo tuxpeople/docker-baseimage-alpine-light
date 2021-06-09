@@ -36,14 +36,7 @@ RUN \
 # Runtime stage
 FROM scratch
 COPY --from=rootfs-stage /root-out/ /
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="TheLamer"
-
-# set version for s6 overlay
-ARG OVERLAY_VERSION="v2.0.0.1"
-ARG OVERLAY_ARCH="amd64"
+ARG TARGETPLATFORM
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
@@ -64,9 +57,14 @@ RUN \
 	shadow \
 	tzdata && \
  echo "**** add s6 overlay ****" && \
+ case ${TARGETPLATFORM} in \
+  "linux/amd64")  OVERLAY_ARCH=amd64  ;; \
+  "linux/arm64")  OVERLAY_ARCH=aarch64  ;; \
+  "linux/arm/v7") OVERLAY_ARCH=armhf  ;; \
+ esac; \
  curl -o \
  /tmp/s6-overlay.tar.gz -L \
-	"https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${OVERLAY_ARCH}.tar.gz" && \
+	"https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${OVERLAY_ARCH}.tar.gz" && \
  tar xfz \
 	/tmp/s6-overlay.tar.gz -C / && \
  echo "**** create abc user and make our folders ****" && \
