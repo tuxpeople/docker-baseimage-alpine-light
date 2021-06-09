@@ -7,8 +7,7 @@
 
 ## Quick reference
 
-I made this container to debug container infrastructure (eg. Kubernetes). 
-This is a image with many handy tools in it.
+A custom base image built with [Alpine linux][appurl] and [S6 overlay](https://github.com/just-containers/s6-overlay), based on the awesome work of [linuxserver.io](https://github.com/linuxserver/docker-baseimage-alpine).
 
 * **Code repository:**
   https://github.com/tuxpeople/docker-baseimage-alpine
