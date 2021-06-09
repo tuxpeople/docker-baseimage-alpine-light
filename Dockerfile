@@ -23,11 +23,11 @@ RUN \
 # hadolint ignore=SC2046,SC2034,SC2002,DL4006
 RUN \
  case ${TARGETPLATFORM} in \
-  "linux/amd64")  ARCH=x86_64  ;; \
-  "linux/arm64")  ARCH=aarch64  ;; \
-  "linux/arm/v7") ARCH=armv7  ;; \
+  "linux/amd64")  export ARCH=x86_64  ;; \
+  "linux/arm64")  export ARCH=aarch64  ;; \
+  "linux/arm/v7") export ARCH=armv7  ;; \
  esac; \
- REL=$(cat /etc/alpine-release | cut -d'.' -f1-2) && \
+ export REL=$(cat /etc/alpine-release | cut -d'.' -f1-2) && \
  curl -o \
  /mkimage-alpine.bash -L \
 	https://raw.githubusercontent.com/gliderlabs/docker-alpine/master/builder/scripts/mkimage-alpine.bash && \
