@@ -2,7 +2,7 @@ FROM alpine:3.10 as rootfs-stage
 ARG TARGETPLATFORM
 
 # environment
-ENV REL=v3.12
+ENV REL=v3.13
 ENV MIRROR=http://dl-cdn.alpinelinux.org/alpine
 ENV PACKAGES=alpine-baselayout,\
 alpine-keys,\
