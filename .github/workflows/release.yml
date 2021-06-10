@@ -14,10 +14,11 @@ on:
 
 env:
   PLATFORMS: "linux/amd64,linux/arm/v7,linux/arm64"                  # Build for which platforms
-  IMAGENAME: "quay.io/tdeutsch/baseimage-alpine"                       # Name of the image
+  IMAGENAME: "quay.io/tdeutsch/baseimage-alpine"                     # Name of the image
   DEFAULT_TAG: "latest"                                              # Which tag is beeing used if we are building for master/main branch 
   QUAY_USER: "tdeutsch"                                              # Which user to use to login to quay.io
   DOCKER_USER: "tdeutsch"                                            # Which user to use to login to DockerHub
+  REGYSTRIES: "quay.io/${{ env.QUAY_USER }},docker.io/${{ env.DOCKER_USER }},ghcr.io/${{ github.actor }}"                            # Push to which registries
 
 #####
 # To rebuild someone else's repo, do this:
@@ -65,7 +66,15 @@ jobs:
           elif [[ $GITHUB_REF == refs/pull/* ]]; then
             TAGS="${{ env.IMAGENAME }}:pr-${{ github.event.number }}"
           fi
-          echo ::set-output name=tags::${TAGS}
+          FULLTAGS=""
+          for i in $(echo ${TAGS} | sed "s/,/ /g")
+          do
+            for r in $(echo ${REGYSTRIES} | sed "s/,/ /g")
+            do
+              FULLTAGS="${FULLTAGS},${r}/${i}"
+            done
+          done
+          echo ::set-output name=tags::${FULLTAGS}
           echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
       -
         name: Hadolint
@@ -79,15 +88,24 @@ jobs:
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       -
-        name: Login to Quay.io
+        name: Log in to DockerHub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
-          registry: quay.io
           username: ${{ env.QUAY_USER }}
           password: ${{ secrets.REGISTRY_TOKEN }}
+          registry: docker.io
       - 
-        name: Log in to GitHub Docker Registry
+        name: Log in to Quay.io
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v1
+        with:
+          username: ${{ env.QUAY_USER }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
+          registry: quay.io
+      - 
+        name: Log in to Log in to GitHub Container Registry
+        if: github.event_name != 'pull_request'
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -115,22 +133,10 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
       -
-        name: Copy to Dockerhub and GitHub Container Registry
-        id: copy_images
-        run: |
-          for i in $(echo ${{ steps.prep.outputs.tags }} | sed "s/,/ /g")
-          do
-              GHTAG=$(echo $i | sed "s/quay.io/docker.io/g" | sed "s/${{ env.QUAY_USER }}/${{ env.DOCKER_USER }}/g")
-              GHCRTAG=$(echo $i | sed "s/quay.io/ghcr.io/g" | sed "s/${{ env.QUAY_USER }}/${{ github.actor }}/g")
-              skopeo copy --all --src-creds=${{ env.QUAY_USER }}:${{ secrets.REGISTRY_TOKEN }} --dest-creds=${{ env.DOCKER_USER }}:${{ secrets.DOCKERPASSWORD }} docker://${i} docker://${GHTAG}
-              skopeo copy --all --src-creds=${{ env.QUAY_USER }}:${{ secrets.REGISTRY_TOKEN }} --dest-creds=${{ github.actor }}:${{ secrets.GITHUB_TOKEN }} docker://${i} docker://${GHCRTAG}
-          done
-          echo ::set-output name=shortname::$(echo ${{ env.IMAGENAME }} | sed "s/quay.io\///g")
-      -
         name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
         with:
           username: ${{ env.DOCKER_USER }}
           password: ${{ secrets.DOCKERPASSWORD }}
-          repository: ${{ steps.copy_images.outputs.shortname }}
+          repository: ${{ env.IMAGENAME }}
 
