@@ -115,7 +115,7 @@ jobs:
             org.opencontainers.image.revision=${{ github.sha }}
             org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
       -
-        name: Copy to Docker Hub
+        name: Copy to Dockerhub and GitHub Container Registry
         id: copy_images
         run: |
           for i in $(echo ${{ steps.prep.outputs.tags }} | sed "s/,/ /g")
