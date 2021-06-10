@@ -14,7 +14,7 @@ on:
 
 env:
   PLATFORMS: "linux/amd64,linux/arm/v7,linux/arm64"                  # Build for which platforms
-  IMAGENAME: "quay.io/tdeutsch/baseimage-alpine"                     # Name of the image
+  IMAGENAME: "baseimage-alpine"                                      # Name of the image
   DEFAULT_TAG: "latest"                                              # Which tag is beeing used if we are building for master/main branch 
   QUAY_USER: "tdeutsch"                                              # Which user to use to login to quay.io
   DOCKER_USER: "tdeutsch"                                            # Which user to use to login to DockerHub
