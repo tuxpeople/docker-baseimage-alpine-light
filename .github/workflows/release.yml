@@ -137,5 +137,5 @@ jobs:
         with:
           username: ${{ env.DOCKER_USER }}
           password: ${{ secrets.DOCKERPASSWORD }}
-          repository: ${{ env.IMAGENAME }}
+          repository: ${{ env.DOCKER_USER }}/${{ env.IMAGENAME }}
 
