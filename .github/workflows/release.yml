@@ -18,7 +18,6 @@ env:
   DEFAULT_TAG: "latest"                                              # Which tag is beeing used if we are building for master/main branch 
   QUAY_USER: "tdeutsch"                                              # Which user to use to login to quay.io
   DOCKER_USER: "tdeutsch"                                            # Which user to use to login to DockerHub
-  REGYSTRIES: "quay.io/${{ env.QUAY_USER }},docker.io/${{ env.DOCKER_USER }},ghcr.io/${{ github.actor }}"                            # Push to which registries
 
 #####
 # To rebuild someone else's repo, do this:
@@ -69,7 +68,7 @@ jobs:
           FULLTAGS=""
           for i in $(echo ${TAGS} | sed "s/,/ /g")
           do
-            for r in $(echo ${REGYSTRIES} | sed "s/,/ /g")
+            for r in quay.io/${{ env.QUAY_USER }} docker.io/${{ env.DOCKER_USER }} ghcr.io/${{ github.actor }}
             do
               FULLTAGS="${FULLTAGS},${r}/${i}"
             done
