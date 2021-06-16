@@ -1,4 +1,4 @@
-FROM alpine:3.13.5 as rootfs-stage
+FROM alpine:3.14.0 as rootfs-stage
 ARG TARGETPLATFORM
 
 # environment
