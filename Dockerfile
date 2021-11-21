@@ -1,4 +1,4 @@
-FROM alpine:3.14.0 as rootfs-stage
+FROM alpine:3.14.3 as rootfs-stage
 ARG TARGETPLATFORM
 
 # environment
@@ -71,10 +71,9 @@ RUN \
   "linux/arm/v7") OVERLAY_ARCH=armhf  ;; \
  esac; \
  curl -o \
- /tmp/s6-overlay.tar.gz -L \
-	"https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${OVERLAY_ARCH}.tar.gz" && \
- tar xfz \
-	/tmp/s6-overlay.tar.gz -C / && \
+ /tmp/s6-overlay-installer -L \
+	"https://github.com/just-containers/s6-overlay/releases/latest/download/s6-overlay-${OVERLAY_ARCH}-installer" && \
+ chmod +x /tmp/s6-overlay-installer && /tmp/s6-overlay-installer / && rm /tmp/s6-overlay-installer && \
  echo "**** create abc user and make our folders ****" && \
  groupmod -g 1000 users && \
  useradd -u 911 -U -d /config -s /bin/false abc && \
