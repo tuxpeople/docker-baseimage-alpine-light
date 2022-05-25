@@ -145,7 +145,7 @@ jobs:
             org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
       -
         name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2
+        uses: peter-evans/dockerhub-description@v3
         with:
           username: ${{ env.DOCKER_USER }}
           password: ${{ secrets.DOCKERPASSWORD }}
