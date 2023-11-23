@@ -1,0 +1,142 @@
+name: "Build & Release"
+
+# This worflow needs those secrets:
+#
+# DOCKERPASSWORD = Docker Hub token
+
+on:
+  schedule:
+    - cron: '3 3 * * *'
+  push:
+    branches:
+      - 'master'
+      - 'main'
+  release:
+    types:
+      - 'published'
+
+env:
+  PLATFORMS: "linux/amd64,linux/arm/v7,linux/arm64"     # Build for which platforms
+  DOCKER_USER: "tdeutsch"                               # Which user to use to login to DockerHub
+
+#####
+# To rebuild someone else's repo, do this:
+#
+# - New env    REPOSITORY: "githubuser/githubrepo"
+# - Add this to the checkout:
+#        with:
+#          repository: ${{ env.REPOSITORY }}
+# - One may also need to disable hadolint, due to the quality of others Dockerfile
+#####
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      -
+        name: Generate Build-Args
+        id: build-args
+        run: |
+          # echo ::set-output name=build-arg1::"buildarg1"
+          # echo ::set-output name=build-arg2::"buildarg2"
+      -
+        name: Prepare
+        id: prep
+        run: |
+          IMAGENAME=$(echo ${{ github.repository }} | sed 's/${{ github.repository_owner }}\/docker-//g')
+          IMAGEPREFIX="ghcr.io/${{ github.repository_owner }}"
+          IMAGE="${IMAGEPREFIX}/${IMAGENAME}"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            VERSION=nightly
+          elif [[ $GITHUB_REF == refs/tags/* ]]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          elif [[ $GITHUB_REF == refs/heads/* ]]; then
+            VERSION=$(echo ${GITHUB_REF#refs/heads/} | sed -r 's#/+#-#g')
+            if [ "${{ github.event.repository.default_branch }}" = "$VERSION" ]; then
+              VERSION=devel
+            fi
+          elif [[ $GITHUB_REF == refs/pull/* ]]; then
+            VERSION=pr-${{ github.event.number }}
+          fi
+          TAGS="${IMAGE}:${VERSION}"
+          if [[ $VERSION =~ ^v[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+            MINOR=${VERSION%.*}
+            MAJOR=${MINOR%.*}
+            TAGS="$TAGS,${IMAGE}:${MINOR},${IMAGE}:${MAJOR},${IMAGE}:latest"
+          # elif [ "${{ github.event_name }}" = "push" ]; then
+          #   TAGS="$TAGS,${IMAGE}:sha-${GITHUB_SHA::8}"
+          fi
+          TAGS="$(echo $TAGS | sed 's|ghcr.io/tuxpeople|docker.io/tdeutsch|g'),$TAGS"
+          echo ${VERSION}
+          echo ::set-output name=tags::${TAGS}
+          echo ::set-output name=imagename::${IMAGENAME}
+          echo ::set-output name=version::${VERSION}
+          echo ::set-output name=created::$(date -u +'%Y-%m-%dT%H:%M:%SZ')
+      -
+        name: Hadolint
+        uses: brpaz/hadolint-action@c27bd9edc1e95eed30474db8f295ff5807ebca14 # v1.5.0
+        with: 
+          dockerfile: Dockerfile
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 # v3.0.0
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@f95db51fddba0c2d1ec667646a06c2ce06100226 # v3.0.0
+      -
+        name: Login to GHCR
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Login to Dockerhub
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3
+        if: github.event_name != 'pull_request'
+        with:
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ secrets.DOCKERPASSWORD }}
+      -
+        name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@4a13e500e55cf31b7a5d59a38ab2040ab0f42f56 # v5.1.0
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: ${{ env.PLATFORMS }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.prep.outputs.tags }}
+          build-args: |
+            ${{ steps.build-args.outputs.build-arg1 }}
+            ${{ steps.build-args.outputs.build-arg2 }}
+          labels: |
+            org.opencontainers.image.title=${{ steps.prep.outputs.imagename }}
+            org.opencontainers.image.description=${{ github.event.repository.description }}
+            org.opencontainers.image.url=${{ github.event.repository.html_url }}
+            org.opencontainers.image.source=${{ github.event.repository.clone_url }}
+            org.opencontainers.image.version=${{ steps.prep.outputs.version }}
+            org.opencontainers.image.created=${{ steps.prep.outputs.created }}
+            org.opencontainers.image.revision=${{ github.sha }}
+            org.opencontainers.image.licenses=${{ github.event.repository.license.spdx_id }}
+      -
+      #   name: Copy to Docker Hub
+      #   id: copy_images
+      #   run: |
+      #     for i in $(echo ${{ steps.prep.outputs.tags }} | sed "s/,/ /g")
+      #     do
+      #         GHTAG=$(echo $i | sed "s/ghcr.io/docker.io/g" | sed "s/${{ github.repository_owner }}/${{ env.DOCKER_USER }}/g")
+      #         skopeo copy --all --src-creds=${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }} --dest-creds=${{ env.DOCKER_USER }}:${{ secrets.DOCKERPASSWORD }} docker://${i} docker://${GHTAG}
+      #     done
+      # -
+        name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@dc67fad7001ef9e8e3c124cb7a64e16d0a63d864 # v3.4.2
+        with:
+          username: ${{ env.DOCKER_USER }}
+          password: ${{ secrets.DOCKERPASSWORD }}
+          repository: "${{ env.DOCKER_USER }}/${{ steps.prep.outputs.imagename }}"
+          short-description: ${{ github.event.repository.description }}
