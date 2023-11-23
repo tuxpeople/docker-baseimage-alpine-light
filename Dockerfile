@@ -1,5 +1,5 @@
 # Runtime stage
-FROM docker.io/library/alpine:3.16.5
+FROM docker.io/library/alpine:3.16.7
 
 ENV PACKAGES=\
 # renovate: datasource=repology depName=alpine_3_16/iptables versioning=loose
