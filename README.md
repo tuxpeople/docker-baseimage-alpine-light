@@ -1,0 +1,1 @@
+# baseimage-alpine-light
