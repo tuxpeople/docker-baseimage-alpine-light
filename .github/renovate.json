@@ -5,5 +5,20 @@
     "github>tuxpeople/shared//renovate/labels.json5",
     "github>tuxpeople/shared//renovate/semanticCommits.json5"
   ],
-  "dependencyDashboardTitle": "Renovate Dashboard 🤖"
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "regexManagers": [
+    {
+        "fileMatch": [
+            "Dockerfile"
+        ],
+        "matchStrings": [
+            "# renovate: datasource=repology depName=alpine_(?<currentValue>\\d+[._]\\d+)"
+        ],
+        "currentValueTemplate": "{{{ replace '_' '.' currentValue }}}",
+        "datasourceTemplate": "docker",
+        "depNameTemplate": "docker.io/library/alpine",
+        "versioningTemplate": "regex:^(?<major>\\d+)[._](?<minor>\\d+)$",
+        "autoReplaceStringTemplate": "# renovate: datasource=repology depName=alpine_{{{newMajor}}}_{{{newMinor}}}"
+    }
+]
 }
