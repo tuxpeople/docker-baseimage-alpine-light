@@ -47,7 +47,7 @@ ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
 # hadolint ignore=DL3018,SC2039
 RUN \
     echo "**** install runtime packages ****" && \
-    apk add --no-cache ${PACKAGES//,/} && \
+    apk add --no-cache ${PACKAGES//,/ } && \
     echo "**** create abc user and make our folders ****" && \
     groupmod -g 1000 users && \
     useradd -u 911 -U -d /config -s /bin/false abc && \
