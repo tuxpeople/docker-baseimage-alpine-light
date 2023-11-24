@@ -36,7 +36,7 @@ ENV unzip_pkgversion="6.0-r9"
 # renovate: datasource=repology depName=alpine_3_17/util-linux versioning=loose
 ENV util-linux_pkgversion="2.38-r1"
 # renovate: datasource=repology depName=alpine_3_17/wget versioning=loose
-ENV wget_pkgversion="1.21.3-r0"
+ENV wget_pkgversion="1.21.4-r0"
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
