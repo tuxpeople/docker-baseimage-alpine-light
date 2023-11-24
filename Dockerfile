@@ -8,7 +8,7 @@ ENV busybox_pkgversion="1.35.0-r17"
 # renovate: datasource=repology depName=alpine_3_17/bash versioning=loose
 ENV bash_pkgversion="5.1.16-r2"
 # renovate: datasource=repology depName=alpine_3_17/bind-tools versioning=loose
-ENV bind-tools_pkgversion="9.16.44-r0"
+ENV bind-tools_pkgversion="9.18.19-r0"
 # renovate: datasource=repology depName=alpine_3_17/ca-certificates versioning=loose
 ENV ca-certificates_pkgversion="20230506-r0"
 # renovate: datasource=repology depName=alpine_3_17/coreutils versioning=loose
