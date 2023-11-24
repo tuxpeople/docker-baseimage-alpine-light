@@ -23,8 +23,8 @@ ENV moreutils_version="0.67-r0"
 ENV nano_version="6.3-r0"
 # renovate: datasource=repology depName=alpine_3_18/netcat-openbsd versioning=loose
 ENV netcat-openbsd_version="1.130-r3"
-# renovate: datasource=repology depName=alpine_3_18/procps versioning=loose
-ENV procps_version="3.3.17-r2"
+# renovate: datasource=repology depName=alpine_3_18/procps-ng versioning=loose
+ENV procps-ng_version="3.3.17-r2"
 # renovate: datasource=repology depName=alpine_3_18/shadow versioning=loose
 ENV shadow_version="4.10-r3"
 # renovate: datasource=repology depName=alpine_3_18/tini versioning=loose
