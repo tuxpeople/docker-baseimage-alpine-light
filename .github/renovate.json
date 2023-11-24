@@ -8,7 +8,6 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "packageRules": [
     {
-      "matchDatasources": ["repology"],
       "matchPackagePatterns": ["^alpine$"],
       "groupName": "OS Dependencies",
       "separateMinorPatch": false,
