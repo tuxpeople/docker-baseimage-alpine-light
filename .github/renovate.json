@@ -13,6 +13,10 @@
       "groupName": "OS Dependencies",
       "separateMinorPatch": false,
       "separateMajorMinor": false
+    },
+    {
+      "matchBaseBranches": ["renovate/master-os-dependencies"],
+      "automerge": true
     }
   ],
   "customManagers": [
