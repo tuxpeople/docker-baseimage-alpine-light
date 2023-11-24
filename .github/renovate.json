@@ -10,6 +10,7 @@
     {
       "matchDatasources": ["repology"],
       "groupName": "OS Dependencies",
+      "separateMinorPatch": false,
       "separateMajorMinor": false
     }
   ],
