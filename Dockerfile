@@ -50,7 +50,7 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN \
     echo "**** install runtime packages ****" && \
     PACKAGES=""; for PKG in "$(env | grep _pkgversion | sed 's/_pkgversion//g')"; do PACKAGES="${PACKAGES} ${PKG}" ; done && \
-    apk add --no-cache ${PACKAGES} && \
+    apk add --no-cache ${PACKAGES} || exit 1 && \
     echo "**** create abc user and make our folders ****" && \
     groupmod -g 1000 users && \
     useradd -u 911 -U -d /config -s /bin/false abc && \
