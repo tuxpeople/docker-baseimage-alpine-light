@@ -4,7 +4,7 @@ FROM docker.io/library/alpine:3.17
 # renovate: datasource=repology depName=alpine_3_17/iptables versioning=loose
 ENV iptables_pkgversion="1.8.8-r1"
 # renovate: datasource=repology depName=alpine_3_17/busybox versioning=loose
-ENV busybox_pkgversion="1.35.0-r17"
+ENV busybox_pkgversion="1.35.0-r29"
 # renovate: datasource=repology depName=alpine_3_17/bash versioning=loose
 ENV bash_pkgversion="5.1.16-r2"
 # renovate: datasource=repology depName=alpine_3_17/bind-tools versioning=loose
