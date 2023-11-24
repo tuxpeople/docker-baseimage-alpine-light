@@ -9,6 +9,7 @@
   "packageRules": [
     {
       "matchDatasources": ["repology"],
+      "matchPackagePatterns": ["^Dockerfile$"],
       "groupName": "OS Dependencies",
       "separateMinorPatch": false,
       "separateMajorMinor": false
