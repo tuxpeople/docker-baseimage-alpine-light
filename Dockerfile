@@ -2,9 +2,6 @@
 FROM docker.io/library/alpine:3.18.4
 
 # renovate: datasource=repology depName=alpine_3_18/iptables versioning=loose
-ENV version_of_ENV IPTABLES_VERSION="1.8.8-r1"
-
-# renovate: datasource=repology depName=alpine_3_18/iptables versioning=loose
 ENV version_of_iptables="1.8.8-r1"
 # renovate: datasource=repology depName=alpine_3_18/busybox versioning=loose
 ENV version_of_busybox="1.35.0-r17"
