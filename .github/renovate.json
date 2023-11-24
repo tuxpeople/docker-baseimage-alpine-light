@@ -9,9 +9,7 @@
   "packageRules": [
     {
       "matchDatasources": ["repology"],
-      "groupName": "OS Dependencies",
-      "separateMinorPatch": false,
-      "separateMajorMinor": false
+      "groupName": "OS Dependencies"
     }
   ],
   "customManagers": [
