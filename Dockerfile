@@ -6,7 +6,7 @@ ENV iptables_pkgversion="1.8.8-r1"
 # renovate: datasource=repology depName=alpine_3_17/busybox versioning=loose
 ENV busybox_pkgversion="1.35.0-r17"
 # renovate: datasource=repology depName=alpine_3_17/bash versioning=loose
-ENV bash_pkgversion="5.1.16-r2"
+ENV bash_pkgversion="5.2.15-r0"
 # renovate: datasource=repology depName=alpine_3_17/bind-tools versioning=loose
 ENV bind-tools_pkgversion="9.16.44-r0"
 # renovate: datasource=repology depName=alpine_3_17/ca-certificates versioning=loose
