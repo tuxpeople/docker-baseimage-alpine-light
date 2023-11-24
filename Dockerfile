@@ -16,7 +16,7 @@ ENV coreutils_pkgversion="9.1-r0"
 # renovate: datasource=repology depName=alpine_3_17/curl versioning=loose
 ENV curl_pkgversion="8.4.0-r0"
 # renovate: datasource=repology depName=alpine_3_17/jq versioning=loose
-ENV jq_pkgversion="1.6-r1"
+ENV jq_pkgversion="1.6-r2"
 # renovate: datasource=repology depName=alpine_3_17/moreutils versioning=loose
 ENV moreutils_pkgversion="0.67-r0"
 # renovate: datasource=repology depName=alpine_3_17/nano versioning=loose
