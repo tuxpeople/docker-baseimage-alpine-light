@@ -6,6 +6,8 @@ env:
 on:
   pull_request:
     types: [assigned, opened, synchronize, reopened]
+    branches-ignore:    
+      - 'renovate/master-os-dependencies'
 
 jobs:
   docker:
