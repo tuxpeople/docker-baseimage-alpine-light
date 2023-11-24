@@ -1,5 +1,5 @@
 # Runtime stage
-FROM docker.io/library/alpine:3.18.4
+FROM docker.io/library/alpine:3.17
 
 # renovate: datasource=repology depName=alpine_3_18/iptables versioning=loose
 ENV iptables_pkgversion="1.8.8-r1"
