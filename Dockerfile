@@ -22,7 +22,7 @@ ENV moreutils_pkgversion="0.67-r0"
 # renovate: datasource=repology depName=alpine_3_17/nano versioning=loose
 ENV nano_pkgversion="6.3-r0"
 # renovate: datasource=repology depName=alpine_3_17/netcat-openbsd versioning=loose
-ENV netcat-openbsd_pkgversion="1.130-r3"
+ENV netcat-openbsd_pkgversion="1.130-r4"
 # renovate: datasource=repology depName=alpine_3_17/procps versioning=loose
 ENV procps_pkgversion="3.3.17-r2"
 # renovate: datasource=repology depName=alpine_3_17/shadow versioning=loose
