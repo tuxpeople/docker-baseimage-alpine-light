@@ -28,7 +28,7 @@ ENV procps_pkgversion="3.3.17-r2"
 # renovate: datasource=repology depName=alpine_3_17/shadow versioning=loose
 ENV shadow_pkgversion="4.10-r3"
 # renovate: datasource=repology depName=alpine_3_17/tini versioning=loose
-ENV tini_pkgversion="0.19.0-r0"
+ENV tini_pkgversion="0.19.0-r1"
 # renovate: datasource=repology depName=alpine_3_17/tzdata versioning=loose
 ENV tzdata_pkgversion="2023c-r0"
 # renovate: datasource=repology depName=alpine_3_17/unzip versioning=loose
