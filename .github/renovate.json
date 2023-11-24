@@ -8,7 +8,7 @@
   "dependencyDashboardTitle": "Renovate Dashboard 🤖",
   "packageRules": [
     {
-      "matchPackagePatterns": ["^alpine$"],
+      "matchPackagePatterns": [".*cycle.*"],
       "groupName": "OS Dependencies",
       "separateMinorPatch": false,
       "separateMajorMinor": false
