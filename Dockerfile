@@ -2,41 +2,41 @@
 FROM docker.io/library/alpine:3.18.4
 
 # renovate: datasource=repology depName=alpine_3_18/iptables versioning=loose
-ENV version_of_iptables="1.8.8-r1"
+ENV iptables_version="1.8.8-r1"
 # renovate: datasource=repology depName=alpine_3_18/busybox versioning=loose
-ENV version_of_busybox="1.35.0-r17"
+ENV busybox_version="1.35.0-r17"
 # renovate: datasource=repology depName=alpine_3_18/bash versioning=loose
-ENV version_of_bash="5.1.16-r2"
+ENV bash_version="5.1.16-r2"
 # renovate: datasource=repology depName=alpine_3_18/bind-tools versioning=loose
-ENV version_of_bind-tools="9.16.44-r0"
+ENV bind-tools_version="9.16.44-r0"
 # renovate: datasource=repology depName=alpine_3_18/ca-certificates versioning=loose
-ENV version_of_ca-certificates="20230506-r0"
+ENV ca-certificates_version="20230506-r0"
 # renovate: datasource=repology depName=alpine_3_18/coreutils versioning=loose
-ENV version_of_coreutils="9.1-r0"
+ENV coreutils_version="9.1-r0"
 # renovate: datasource=repology depName=alpine_3_18/curl versioning=loose
-ENV version_of_curl="8.4.0-r0"
+ENV curl_version="8.4.0-r0"
 # renovate: datasource=repology depName=alpine_3_18/jq versioning=loose
-ENV version_of_jq="1.6-r1"
+ENV jq_version="1.6-r1"
 # renovate: datasource=repology depName=alpine_3_18/moreutils versioning=loose
-ENV version_of_moreutils="0.67-r0"
+ENV moreutils_version="0.67-r0"
 # renovate: datasource=repology depName=alpine_3_18/nano versioning=loose
-ENV version_of_nano="6.3-r0"
+ENV nano_version="6.3-r0"
 # renovate: datasource=repology depName=alpine_3_18/netcat-openbsd versioning=loose
-ENV version_of_netcat-openbsd="1.130-r3"
+ENV netcat-openbsd_version="1.130-r3"
 # renovate: datasource=repology depName=alpine_3_18/procps versioning=loose
-ENV version_of_procps="3.3.17-r2"
+ENV procps_version="3.3.17-r2"
 # renovate: datasource=repology depName=alpine_3_18/shadow versioning=loose
-ENV version_of_shadow="4.10-r3"
+ENV shadow_version="4.10-r3"
 # renovate: datasource=repology depName=alpine_3_18/tini versioning=loose
-ENV version_of_tini="0.19.0-r0"
+ENV tini_version="0.19.0-r0"
 # renovate: datasource=repology depName=alpine_3_18/tzdata versioning=loose
-ENV version_of_tzdata="2023c-r0"
+ENV tzdata_version="2023c-r0"
 # renovate: datasource=repology depName=alpine_3_18/unzip versioning=loose
-ENV version_of_unzip="6.0-r9"
+ENV unzip_version="6.0-r9"
 # renovate: datasource=repology depName=alpine_3_18/util-linux versioning=loose
-ENV version_of_util-linux="2.38-r1"
+ENV util-linux_version="2.38-r1"
 # renovate: datasource=repology depName=alpine_3_18/wget versioning=loose
-ENV version_of_wget="1.21.3-r0"
+ENV wget_version="1.21.3-r0"
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
