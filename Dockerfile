@@ -24,6 +24,7 @@ RUN \
         moreutils \ 
         nano \ 
         netcat-openbsd \ 
+        run-parts \ 
         shadow \ 
         tini \ 
         tzdata \ 
@@ -38,6 +39,7 @@ RUN \
     sed -i -e 's/^root::/root:!:/' /etc/shadow; mkdir -p \
     /app \
     /config \
+    /scripts \
     /defaults && \
     echo "**** cleanup ****" && \
     rm -rf \
@@ -47,3 +49,6 @@ RUN \
 COPY root/ /
 
 ENTRYPOINT ["/sbin/tini", "--"]
+
+# ... the names must consist entirely of ASCII upper- and lower-case letters, ASCII digits, ASCII underscores, and ASCII minus-hyphens (note that .sh or . is not allowed), Other files and directories are silently ignored
+CMD ["/bin/sh", "-c", "run-parts /scripts; /docker-entrypoint.sh"]
