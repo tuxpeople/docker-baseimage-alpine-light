@@ -5,55 +5,5 @@
     "github>tuxpeople/shared//renovate/labels.json5",
     "github>tuxpeople/shared//renovate/semanticCommits.json5"
   ],
-  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
-  "baseBranches": ["master", "renovate/master-os-dependencies"],
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["alpine"],
-      "groupName": "OS Dependencies",
-      "separateMinorPatch": false,
-      "separateMajorMinor": false
-    },
-    {
-      "matchBaseBranches": ["renovate/master-os-dependencies"],
-      "automerge": true
-    }
-  ],
-  "customManagers": [
-    {
-      "customType": "regex",
-      "description": "update Alpine versions in repology repositories annotations like \"# renovate: datasource=repology depName=alpine_3_17/iptables\"",
-      "matchStrings": [
-        "# renovate: datasource=repology depName=alpine_(?<currentValue>\\d+[._]\\d+)"
-      ],
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "currentValueTemplate": "{{{ replace '_' '.' currentValue }}}",
-      "datasourceTemplate": "docker",
-      "depNameTemplate": "docker.io/library/alpine",
-      "versioningTemplate": "regex:^(?<major>\\d+)[._](?<minor>\\d+)$",
-      "autoReplaceStringTemplate": "# renovate: datasource=repology depName=alpine_{{{newMajor}}}_{{{newMinor}}}"
-    },
-    {
-      "customType": "regex",
-      "description": "use build and revision versions to update alpine versions in Docker tags like golang:1.20.3-alpine3.16",
-      "matchStrings": [
-        "FROM (?<depName>[^:\\s]+):(?<currentValue>[a-zA-Z0-9_][a-zA-Z0-9_.-]{0,127})(?:@(?<currentDigest>sha256:[a-zA-Z0-9]{64}))?"
-      ],
-      "fileMatch": [
-        "^Dockerfile$"
-      ],
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "regex:^(?:(?<major>\\d+)(?:\\.(?<minor>\\d+)(?:\\.(?<patch>\\d+))?)?-)?alpine(?<build>\\d+)(?:\\.(?<revision>\\d+))?$"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
-      "matchStrings": [
-        "#\\s*renovate:\\s*datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_pkgversion=\"(?<currentValue>.*)\"\\s"
-      ],
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    }
-  ]
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖"
 }
