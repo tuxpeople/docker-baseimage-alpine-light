@@ -1,5 +1,5 @@
 # Runtime stage
-FROM docker.io/library/alpine:3.17
+FROM docker.io/library/alpine:3.18
 
 # environment variables
 ENV PS1="$(whoami)@$(hostname):$(pwd)\\$ " \
