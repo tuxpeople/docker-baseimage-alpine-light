@@ -1,2 +1,2 @@
 # renovate: datasource=docker depName=alpine
-IMAGE_VERSION="3.17.4"
+IMAGE_VERSION: 3.17.4
