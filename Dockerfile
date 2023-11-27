@@ -12,7 +12,7 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 # hadolint ignore=DL3018
 RUN \
     echo "**** install runtime packages ****" && \
-    apk add --no-cache \
+    apk add --no-cache --upgrade \
         bash \ 
         bind-tools \ 
         busybox \ 
