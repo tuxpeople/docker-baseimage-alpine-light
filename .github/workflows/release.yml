@@ -73,7 +73,7 @@ jobs:
         id: prep
         run: |
           IMAGENAME=$(echo ${{ github.repository }} | sed 's/${{ github.repository_owner }}\/docker-//g')
-          VERSION=${{needs.get_version.outputs.build_version}}
+          VERSION=${{ env.build_version }}
 
           if [[ $GITHUB_REF == refs/pull/* ]]; then
             VERSION=pr${{ github.event.number }}-${VERSION}
