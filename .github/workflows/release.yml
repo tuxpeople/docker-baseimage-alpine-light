@@ -48,7 +48,8 @@ jobs:
             VERSION="v${VERSION}"
           fi
           echo ${VERSION}
-          echo "build_version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "build_version=${VERSION}" >> $GITHUB_ENV
+
 
   lint:
     uses: ./.github/workflows/ci-lint.yml
@@ -59,7 +60,7 @@ jobs:
     secrets:
       SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
     with:
-      build_version: ${{needs.get_version.outputs.build_version}}
+      build_version: ${{ env.build_version }}
 
   build_and_release:
     needs: [build-test, lint]
