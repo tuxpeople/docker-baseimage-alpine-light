@@ -1,0 +1,29 @@
+name: "CI: Linting Dockerfile"
+
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  hadolint:
+    runs-on: ubuntu-latest
+
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+      -
+        name: Hadolint
+        if: github.event_name != 'pull_request'
+        uses: brpaz/hadolint-action@c27bd9edc1e95eed30474db8f295ff5807ebca14 # v1.5.0
+        with: 
+          dockerfile: Dockerfile
+      -
+        name: Hadolint for PR
+        if: github.event_name == 'pull_request'
+        uses: reviewdog/action-hadolint@f7d29ec6dd89022747bd18b5a151b62ac2f1555e # v1.36.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          filter_mode: diff_context
+          fail_on_error: true
