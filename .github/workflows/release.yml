@@ -191,7 +191,7 @@ jobs:
       #     done
       - name: Install cosign
         if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@1fc5bd396d372bee37d608f955b336615edf79c8
+        uses: sigstore/cosign-installer@c81cf0609efaa91ce6f4274d6d18e42e5fbb377c
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
