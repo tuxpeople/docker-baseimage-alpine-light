@@ -44,7 +44,7 @@ RUN \
     /tmp/*
 
 # add local files
-COPY --chown=abc:abc root/ /
+COPY --chown=abc:abc --chmod=774 root/ /
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
