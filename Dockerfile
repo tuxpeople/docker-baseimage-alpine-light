@@ -44,9 +44,9 @@ RUN \
     /tmp/*
 
 # add local files
-COPY root/ /
+COPY --chown=abc:abc root/ /
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
 # ... the names must consist entirely of ASCII upper- and lower-case letters, ASCII digits, ASCII underscores, and ASCII minus-hyphens (note that .sh or . is not allowed), Other files and directories are silently ignored
-CMD ["/bin/sh", "-c", "run-parts /scripts; /docker-entrypoint.sh"]
+CMD ["/bin/sh", "-c", "run-parts /scripts; /app/docker-entrypoint.sh"]
