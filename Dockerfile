@@ -33,10 +33,14 @@ RUN \
         wget \ 
     || exit 1 && \
     echo "**** create abc user and make our folders ****" && \
-    groupmod -g 1000 users && \
-    useradd -u 911 -U -d /config -s /bin/false abc && \
-    usermod -G users abc && \
+    addgroup -S abc && \
+    adduser -S -h /config -D -s /bin/false abc -G abc && \
     sed -i -e 's/^root::/root:!:/' /etc/shadow; mkdir -p \
+    /app \
+    /config \
+    /scripts \
+    /defaults && \
+    chown abc:abc \
     /app \
     /config \
     /scripts \
