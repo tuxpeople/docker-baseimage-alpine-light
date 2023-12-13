@@ -35,10 +35,10 @@ RUN \
     echo "**** create abc user and make our folders ****" && \
     addgroup -S abc && \
     adduser -S -h /config -D -s /bin/false abc -G abc && \
-    mkdir -p /app && chown -R abc:abc /app && chmod -R 775 /app &&\
-    mkdir -p /config && chown -R abc:abc /config && chmod -R 775 /config &&\
-    mkdir -p /scripts && chown -R abc:abc /scripts && chmod -R 775 /scripts &&\
-    mkdir -p /defaults && chown -R abc:abc /defaults && chmod -R 775 /defaults &&\
+    mkdir -p /app && chown -R abc:abc /app && chmod -R 775 /app && chmod g+s /app && \
+    mkdir -p /config && chown -R abc:abc /config && chmod -R 775 /config && chmod g+s /config && \
+    mkdir -p /scripts && chown -R abc:abc /scripts && chmod -R 775 /scripts && chmod g+s /scripts && \
+    mkdir -p /defaults && chown -R abc:abc /defaults && chmod -R 775 /defaults && chmod g+s /defaults && \
     echo "**** cleanup ****" && \
     rm -rf \
     /tmp/*
