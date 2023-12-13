@@ -35,16 +35,10 @@ RUN \
     echo "**** create abc user and make our folders ****" && \
     addgroup -S abc && \
     adduser -S -h /config -D -s /bin/false abc -G abc && \
-    sed -i -e 's/^root::/root:!:/' /etc/shadow; mkdir -p \
-    /app \
-    /config \
-    /scripts \
-    /defaults && \
-    chown abc:abc \
-    /app \
-    /config \
-    /scripts \
-    /defaults && \
+    mkdir -p /app && chown -R abc:abc /app && chmod -R 775 /app &&\
+    mkdir -p /config && chown -R abc:abc /config && chmod -R 775 /config &&\
+    mkdir -p /scripts && chown -R abc:abc /scripts && chmod -R 775 /scripts &&\
+    mkdir -p /defaults && chown -R abc:abc /defaults && chmod -R 775 /defaults &&\
     echo "**** cleanup ****" && \
     rm -rf \
     /tmp/*
