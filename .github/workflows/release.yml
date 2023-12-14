@@ -169,7 +169,7 @@ jobs:
           image: ghcr.io/${{ github.repository_owner }}/${{ env.prep_imagename }}:${{ env.prep_version }}
           args: --file=Dockerfile
       - name: Upload SARIF artifact
-        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
+        uses: actions/upload-artifact@c7d193f32edcb7bfad88892161225aeda64e9392 # v4
         if: ${{ github.event_name != 'pull_request' }}
         with:
           name: SARIF
