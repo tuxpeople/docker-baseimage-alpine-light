@@ -203,7 +203,9 @@ jobs:
           echo "$KEY" > cosign.key
           for i in $(echo ${{ env.prep_tags }} | sed "s/,/ /g")
           do
-            cosign sign --key cosign.key ${i}
+            NAME=$(echo ${i} | cut -d':' -f1')
+            DIGEST=$(ocker images --no-trunc --quiet ${NAME})
+            cosign sign --key cosign.key ${NAME}:${DIGEST}
           done
           rm -f cosign.key
 
