@@ -189,25 +189,25 @@ jobs:
       #         GHTAG=$(echo $i | sed "s/ghcr.io/docker.io/g" | sed "s/${{ github.repository_owner }}/${{ env.DOCKER_USER }}/g")
       #         skopeo copy --all --src-creds=${{ github.repository_owner }}:${{ secrets.GITHUB_TOKEN }} --dest-creds=${{ env.DOCKER_USER }}:${{ secrets.DOCKERPASSWORD }} docker://${i} docker://${GHTAG}
       #     done
-      - name: Install cosign
-        if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@9614fae9e5c5eddabb09f90a270fcb487c9f7149
-      - name: Sign the published Docker image
-        if: ${{ github.event_name != 'pull_request' }}
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-          KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
-        # This step uses the identity token to provision an ephemeral certificate
-        # against the sigstore community Fulcio instance.
-        run: |
-          echo "$KEY" > cosign.key
-          for i in $(echo ${{ env.prep_tags }} | sed "s/,/ /g")
-          do
-            NAME=$(echo ${i} | cut -d':' -f1)
-            DIGEST=$(docker images --no-trunc --quiet ${NAME})
-            cosign sign --key cosign.key ${NAME}:${DIGEST}
-          done
-          rm -f cosign.key
+      # - name: Install cosign
+      #   if: github.event_name != 'pull_request'
+      #   uses: sigstore/cosign-installer@9614fae9e5c5eddabb09f90a270fcb487c9f7149
+      # - name: Sign the published Docker image
+      #   if: ${{ github.event_name != 'pull_request' }}
+      #   env:
+      #     COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+      #     KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+      #   # This step uses the identity token to provision an ephemeral certificate
+      #   # against the sigstore community Fulcio instance.
+      #   run: |
+      #     echo "$KEY" > cosign.key
+      #     for i in $(echo ${{ env.prep_tags }} | sed "s/,/ /g")
+      #     do
+      #       NAME=$(echo ${i} | cut -d':' -f1)
+      #       DIGEST=$(docker images --no-trunc --quiet ${NAME})
+      #       cosign sign --key cosign.key ${NAME}:${DIGEST}
+      #     done
+      #     rm -f cosign.key
 
   cleanup:
     needs: [build_and_release]
