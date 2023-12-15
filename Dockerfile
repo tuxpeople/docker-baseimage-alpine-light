@@ -13,23 +13,23 @@ SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 RUN \
     echo "**** install runtime packages ****" && \
     apk add --no-cache --upgrade \
-        bash \ 
-        bind-tools \ 
+     #   bash \ 
+    #    bind-tools \ 
         busybox \ 
         ca-certificates \ 
-        coreutils \ 
+     #   coreutils \ 
         curl \ 
-        iptables \ 
-        jq \ 
-        moreutils \ 
-        nano \ 
-        netcat-openbsd \ 
+     #   iptables \ 
+     #   jq \ 
+     #   moreutils \ 
+     #   nano \ 
+     #   netcat-openbsd \ 
         run-parts \ 
-        shadow \ 
+     #   shadow \ 
         tini \ 
         tzdata \ 
-        unzip \ 
-        util-linux \ 
+     #   unzip \ 
+     #   util-linux \ 
         wget \ 
     || exit 1 && \
     echo "**** create abc user and make our folders ****" && \
